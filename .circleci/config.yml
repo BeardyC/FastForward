@@ -11,8 +11,6 @@ jobs:
       MSG_1: "Hello"
     docker: 
     - image: alpine:latest
-    branches:
-        only:
     steps:
       - checkout
       - run:
@@ -23,8 +21,6 @@ jobs:
       MSG_1: "World"
     docker: 
     - image: alpine:latest
-    branches:
-        only:
     steps:
       - checkout
       - run:
