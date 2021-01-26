@@ -7,18 +7,13 @@ orbs:
 # Orchestrate or schedule a set of jobs
 jobs:
   hello:
-    environment:
-      MSG_1: "Hello"
-    branches:
-      only:
-        - /.*/
     docker: 
-      - image: alpine:latest
-      steps:
-        - checkout
-        - run:
-            name: Print Hello
-            command: echo $MSG_1
+    - image: alpine:latest
+    steps:
+      - checkout
+      - run:
+          name: Print Hello
+          command: echo $MSG_1
 workflows:
   # Name the workflow "welcome"
   welcome:
