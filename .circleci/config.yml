@@ -32,8 +32,11 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Print Hello
+          name: Print Project Details
           command: echo $PROJECT_NAME
+      - run: $CIRCLE_USERNAME
+      - run: $CIRCLE_SHA1
+      - run: $CIRCLE_REPOSITORY_URL
 workflows:
   # Name the workflow "welcome"
   welcome:
