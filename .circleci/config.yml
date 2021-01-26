@@ -12,7 +12,7 @@ jobs:
     docker: 
     - image: alpine:latest
     steps:
-      - checkout
+      # - checkout
       - run:
           name: Print Hello
           command: echo $MSG_1
@@ -38,14 +38,38 @@ jobs:
       - run: echo $CIRCLE_SHA1
       - run: echo $CIRCLE_REPOSITORY_URL
       - run: printenv
+  save_hello_world_output:
+    docker: 
+      - image: alpine:latest
+    working_directory: ~/
+    steps:
+      - run:
+          name: Persist Output
+          command: echo $MSG_1 > out.txt
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - out.txt
+  print_output_file:
+    docker: 
+      - image: alpine:latest
+    working_directory: ~/
+    steps:
+      - run:
+          name: Read file
+          command: cat out.txt
+      - attach_workspace:
+          at: ~/
 workflows:
   # Name the workflow "welcome"
   welcome:
     # Run the welcome/run job in its own container
     jobs:
-      - welcome/run
-      - print_hello
-      - print_world:
-          requires:
-            - print_hello
-      - print_env_vars  
+      # - welcome/run
+      # - print_hello
+      # - print_world:
+      #     requires:
+      #       - print_hello
+      # - print_env_vars  
+      - save_hello_world_output
+      - print_output_file
