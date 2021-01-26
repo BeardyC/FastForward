@@ -26,6 +26,14 @@ jobs:
       - run:
           name: Print Hello
           command: echo $MSG_1
+  print_env_vars:
+    docker: 
+    - image: alpine:latest
+    steps:
+      - checkout
+      - run:
+          name: Print Hello
+          command: echo $PROJECT_NAME
 workflows:
   # Name the workflow "welcome"
   welcome:
@@ -36,3 +44,4 @@ workflows:
       - print_world:
           requires:
             - print_hello
+      - print_env_vars  
