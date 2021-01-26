@@ -37,6 +37,7 @@ jobs:
       - run: $CIRCLE_USERNAME
       - run: $CIRCLE_SHA1
       - run: $CIRCLE_REPOSITORY_URL
+      - run: printenv
 workflows:
   # Name the workflow "welcome"
   welcome:
