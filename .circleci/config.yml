@@ -6,11 +6,25 @@ orbs:
   welcome: circleci/welcome-orb@0.4.1
 # Orchestrate or schedule a set of jobs
 jobs:
-  hello:
+  print_hello:
     environment:
       MSG_1: "Hello"
     docker: 
     - image: alpine:latest
+    branches:
+        only:
+    steps:
+      - checkout
+      - run:
+          name: Print Hello
+          command: echo $MSG_1
+  print_world:
+    environment:
+      MSG_1: "World"
+    docker: 
+    - image: alpine:latest
+    branches:
+        only:
     steps:
       - checkout
       - run:
@@ -22,4 +36,5 @@ workflows:
     # Run the welcome/run job in its own container
     jobs:
       - welcome/run
-      - hello
+      - print_hello
+      - print_world
