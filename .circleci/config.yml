@@ -55,11 +55,12 @@ jobs:
       - image: alpine:latest
     working_directory: ~/
     steps:
+      - run: |
+          pwd
+          ls -lah
       - run:
           name: Read file
           command: cat out.txt
-      - attach_workspace:
-          at: ~/
 workflows:
   # Name the workflow "welcome"
   welcome:
