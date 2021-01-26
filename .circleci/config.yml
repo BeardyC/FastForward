@@ -34,9 +34,9 @@ jobs:
       - run:
           name: Print Project Details
           command: echo $PROJECT_NAME
-      - run: $CIRCLE_USERNAME
-      - run: $CIRCLE_SHA1
-      - run: $CIRCLE_REPOSITORY_URL
+      - run: echo $CIRCLE_USERNAME
+      - run: echo $CIRCLE_SHA1
+      - run: echo $CIRCLE_REPOSITORY_URL
       - run: printenv
 workflows:
   # Name the workflow "welcome"
