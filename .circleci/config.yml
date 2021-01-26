@@ -7,6 +7,8 @@ orbs:
 # Orchestrate or schedule a set of jobs
 jobs:
   hello:
+    environment:
+      MSG_1: "Hello"
     docker: 
     - image: alpine:latest
     steps:
