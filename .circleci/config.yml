@@ -43,6 +43,8 @@ jobs:
       - run: printenv
   save_hello_world_output:
     <<: *defaults
+    environment:
+      MSG_1: "Hello World"
     steps:
       - run:
           name: Persist Output
@@ -66,7 +68,13 @@ jobs:
   print_workflow_id:
     <<: *defaults
     <<: *print_pipeline_id
-
+  failing_job:
+    <<: *defaults
+    steps:
+      - run: return 1
+      - run: 
+          command: echo cleaning
+          when: on_fail
 workflows:
   # Name the workflow "welcome"
   welcome:
@@ -78,8 +86,9 @@ workflows:
       #     requires:
       #       - print_hello
       # - print_env_vars  
-      - save_hello_world_output
-      - print_output_file:
-          requires:
-            - save_hello_world_output
+      # - save_hello_world_output
+      # - print_output_file:
+      #     requires:
+      #       - save_hello_world_output
       - print_workflow_id
+      - failing_job
