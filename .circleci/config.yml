@@ -9,7 +9,7 @@ print_pipeline_id: &print_pipeline_id
   steps:
     - run:
         name: Reusable Command to print workflowid
-        command: echo $MSG_1 > out.txt
+        command: echo $CIRCLE_WORKFLOW_ID
 # Orchestrate or schedule a set of jobs
 jobs:
   print_hello:
