@@ -34,3 +34,4 @@ workflows:
   infra:
     jobs:
       - create_infrastructure
+      - deploy job
