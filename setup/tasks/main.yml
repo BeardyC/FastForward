@@ -23,6 +23,9 @@
 - name: "Fire it up"
   shell: pm2 start ./index.js -f
 
+- name: "Check process"
+  shell: ps aux
+
 # apt:
   #   name: ["apache2"]
   #   state: latest
