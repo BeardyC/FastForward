@@ -8,7 +8,7 @@ jobs:
     <<: *defaults
     steps:
       - checkout
-      - run: aws cloudformation deploy -stack-name TestStack --template-file template.yml  --capabilities "CAPABILITY_IAM" "CAPABILITY_NAMED_IAM"
+      - run: aws cloudformation deploy --stack-name TestStack --template-file template.yml  --capabilities "CAPABILITY_IAM" "CAPABILITY_NAMED_IAM"
 workflows:
   infra:
     jobs:
