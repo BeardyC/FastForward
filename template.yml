@@ -5,7 +5,8 @@ Resources:
       SecurityGroups:
         - !Ref InstanceSecurityGroup
       KeyName: ansibleKey
-      ImageId: 'ami-0ac73f33a1888c64a' # you may need to find out what instance types are available in your region - use https://cloud-images.ubuntu.com/locator/ec2/
+      ImageId: 'ami-0ac73f33a1888c64a'
+      Tag: TestServer
   InstanceSecurityGroup:
     Type: 'AWS::EC2::SecurityGroup'
     Properties:

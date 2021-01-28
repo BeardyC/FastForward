@@ -1,0 +1,33 @@
+---
+- name: "install node"
+  become: yes
+  apt:
+    name: ["nodejs", "npm"]
+    state: latest
+    update_cache: yes
+
+- name: "install pm2"
+  become: yes
+  npm:
+    name: "pm2"
+    global: yes
+    state: present
+    production: yes
+
+- name: "install index page"
+  copy:
+    src: index.js
+    dest: .
+    backup: yes
+
+- name: "Fire it up"
+  shell: pm2 start ./index.js -f
+
+# apt:
+  #   name: ["apache2"]
+  #   state: latest
+  #   update_cache: yes
+# - name: "upgrade packages"
+#   become: yes
+#   apt:
+#     upgrade_cache: yes
