@@ -30,7 +30,9 @@ jobs:
       - run: apk add --update ansible 
       - restore_cache:
           key: inventory
+      - run: cat ~/inventory.txt  
       - run: ansible-playbook -i inventory.txt main.yml # might need to reference the above ssh key?
+      - run: return 1
 workflows:
   infra:
     jobs:
