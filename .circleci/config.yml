@@ -4,24 +4,12 @@ defaults: &defaults
     - image: amazon/aws-cli
   working_directory: ~/
 jobs:
-  print_env_vars:
-    <<: *defaults
-    steps:
-      - run: printenv
-      - run: echo $AWS_ACCESS_KEY_ID
-      - run: echo $AWS_SECRET_ACCESS_KEY
-      - run: echo $AWS_DEFAULT_REGION
   create_infrastructure:
     <<: *defaults
     steps:
       - checkout
-      - run: |
-          aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
-          aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
-          aws configure set default.region $AWS_DEFAULT_REGION
-      - run: aws cloudformation create-stack --stack-name TestStack --template-body file://template.yml  --capabilities "CAPABILITY_IAM" "CAPABILITY_NAMED_IAM"
+      - run: aws cloudformation deploy -stack-name TestStack --template-file template.yml  --capabilities "CAPABILITY_IAM" "CAPABILITY_NAMED_IAM"
 workflows:
   infra:
     jobs:
-      - print_env_vars
       - create_infrastructure
