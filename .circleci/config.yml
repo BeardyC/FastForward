@@ -15,6 +15,7 @@ jobs:
       - run: |
           echo [all] >> inventory.txt
           aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:Project,Values=TestServer" --output text >> inventory.txt
+      - run: | 
           cat inventory.txt
           pwd
       - save_cache:
