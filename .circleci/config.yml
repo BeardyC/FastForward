@@ -34,7 +34,7 @@ jobs:
       - restore_cache:
           key: inventory
       - run: cat ~/inventory.txt  
-      - run: ansible-playbook -i inventory.txt main.yml # might need to reference the above ssh key?
+      - run: ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i inventory.txt main.yml # might need to reference the above ssh key?
       - run: return 1
 workflows:
   infra:
