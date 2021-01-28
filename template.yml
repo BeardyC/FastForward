@@ -6,7 +6,9 @@ Resources:
         - !Ref InstanceSecurityGroup
       KeyName: ansibleKey
       ImageId: 'ami-0ac73f33a1888c64a'
-      Tag: TestServer
+      Tags: 
+        - Key: "Project"
+          Value: "TestServer"
   InstanceSecurityGroup:
     Type: 'AWS::EC2::SecurityGroup'
     Properties:
