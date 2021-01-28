@@ -18,7 +18,7 @@ jobs:
       - save_cache:
           key: inventory
           paths: ~/inventory.txt
-  deploy-job:
+  deploy_job:
     docker: 
       - image: python:3.7-alpine3.11
     steps:
@@ -34,4 +34,4 @@ workflows:
   infra:
     jobs:
       - create_infrastructure
-      - deploy job
+      - deploy_job
