@@ -29,9 +29,11 @@ jobs:
       - run: apk add --update ansible 
       - restore_cache:
           key: inventory
-      - run: ansible-playbook -i inventory.txt playbook.yml # might need to reference the above ssh key?
+      - run: ansible-playbook -i inventory.txt main.yml # might need to reference the above ssh key?
 workflows:
   infra:
     jobs:
       - create_infrastructure
-      - deploy_job
+      - deploy_job:
+          requires:
+            - create_infrastructure
