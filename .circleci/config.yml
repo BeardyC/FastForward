@@ -1,14 +1,23 @@
+---
 version: 2.1
 defaults: &defaults
   docker:
     - image: amazon/aws-cli
   working_directory: ~/
+commands:
+  destroy_environment:
+    steps:
+      - run:
+          name: Destroy Infra
+          command: |
+            aws cloudformation delete-stack --stack-name test-${CIRCLE_WORKFLOW_ID} 
+
 jobs:
   create_infrastructure:
     <<: *defaults
     steps:
       - checkout
-      - run: aws cloudformation deploy --stack-name TestStack --template-file template.yml  --capabilities "CAPABILITY_IAM" "CAPABILITY_NAMED_IAM"
+      - run: aws cloudformation deploy --stack-name test-${CIRCLE_WORKFLOW_ID} --template-file template.yml  --capabilities "CAPABILITY_IAM" "CAPABILITY_NAMED_IAM"
   populate_inventory:
     <<: *defaults
     steps:
@@ -36,20 +45,21 @@ jobs:
       - run: cat ~/inventory.txt  
       - run: ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i inventory.txt main.yml # might need to reference the above ssh key?
   smoke_test:
-      docker:
-        - image: alpine:latest
-      steps:
-        - run: apk add --update curl
-        - run:
-            name: smoke test.
-            command: |
-              URL="https://blog.udacity.com/"
-              if curl -s --head ${URL} # test if blog.udacity. com exists
-              then
-               return 0
-              else
-               return 1
-              fi
+    <<: *defaults
+    steps:
+      - run: apk add --update curl
+      - run:
+          name: smoke test.
+          command: |
+            URL="https://google333.com/"
+            if curl -s --head ${URL} 
+            then
+              return 0
+            else
+              return 1
+            fi
+      - destroy_environment
+      when: on_fail
 
 workflows:
   infra:
