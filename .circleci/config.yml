@@ -34,7 +34,7 @@ jobs:
           cat inventory.txt
           pwd
       - save_cache:
-          key: inventory
+          key: inventory-{{ ${CIRCLE_WORKFLOW_ID} }}
           paths: ~/inventory.txt
 
   deploy_job:
@@ -74,10 +74,10 @@ jobs:
 workflows:
   infra:
     jobs:
-      - create_infrastructure
+      # - create_infrastructure
       - populate_inventory:
-          requires:
-            - create_infrastructure
+          # requires:
+          #   - create_infrastructure
       - deploy_job:
           requires:
             - populate_inventory
