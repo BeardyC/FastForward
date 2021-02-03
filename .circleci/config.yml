@@ -26,6 +26,7 @@ jobs:
       - run: aws cloudformation deploy --stack-name test-${CIRCLE_WORKFLOW_ID} --template-file template.yml  --capabilities "CAPABILITY_IAM" "CAPABILITY_NAMED_IAM"
   populate_inventory:
     executor: aws_executor
+    working_directory: ~/
     steps:
       - run: |
           echo [all] >> inventory.txt
