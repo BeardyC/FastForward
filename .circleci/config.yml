@@ -34,7 +34,7 @@ jobs:
           cat inventory.txt
           pwd
       - save_cache:
-          key: inventory
+          key: inventory-${CIRCLE_WORKFLOW_ID}
           paths: ~/inventory.txt
 
   deploy_job:
@@ -48,7 +48,7 @@ jobs:
             - "fc:9a:a5:f0:bb:74:6a:59:ae:ba:f7:1d:55:24:22:08"
       - run: apk add --update ansible 
       - restore_cache:
-          key: inventory
+          key: inventory-${CIRCLE_WORKFLOW_ID}
       - run: cat ~/inventory.txt  
       - run: ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i inventory.txt main.yml 
       - run:
