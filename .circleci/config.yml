@@ -33,6 +33,7 @@ jobs:
       - run: | 
           cat inventory.txt
           pwd
+      # Gen new key
       - save_cache:
           key: inventory-{{ .Environment.CIRCLE_WORKFLOW_ID }}
           paths: ~/inventory.txt
@@ -59,17 +60,16 @@ jobs:
   smoke_test:
     <<: *defaults
     steps:
-      - run: apk add --update curl
-      # - run:
-      #     name: smoke test.
-      #     command: |
-      #       URL="https://google333.com/"
-      #       if curl -s --head ${URL} 
-      #       then
-      #         return 0
-      #       else
-      #         return 1
-      #       fi
+      - run:
+          name: smoke test.
+          command: |
+            URL="https://google333.com/"
+            if curl -s --head ${URL} 
+            then
+              return 0
+            else
+              return 1
+            fi
       - destroy_environment
 workflows:
   infra:
