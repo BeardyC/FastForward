@@ -47,6 +47,7 @@ jobs:
           fingerprints:
             - "fc:9a:a5:f0:bb:74:6a:59:ae:ba:f7:1d:55:24:22:08"
       - run: apk add --update ansible 
+      - run: ls -lah ~/
       - restore_cache:
           key: inventory-${CIRCLE_WORKFLOW_ID}
       - run: cat ~/inventory.txt  
