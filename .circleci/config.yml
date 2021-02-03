@@ -9,7 +9,6 @@ executors:
   aws_executor:
     docker:
       - image: amazon/aws-cli
-    working_directory: ~/
 
 commands:
   destroy_environment:
@@ -36,7 +35,7 @@ jobs:
           pwd
       - save_cache:
           key: inventory
-          paths: inventory.txt
+          paths: ~/inventory.txt
 
   deploy_job:
     docker: 
@@ -50,7 +49,6 @@ jobs:
       - run: apk add --update ansible 
       - restore_cache:
           key: inventory
-      - run: ls -lah ~/
       - run: cat ~/inventory.txt  
       - run: ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i inventory.txt main.yml 
       - run:
