@@ -75,9 +75,10 @@ workflows:
   infra:
     jobs:
       # - create_infrastructure
-      - populate_inventory:
-          # requires:
-          #   - create_infrastructure
+      - populate_inventory
+      # - populate_inventory:
+      #     requires:
+      #       - create_infrastructure
       - deploy_job:
           requires:
             - populate_inventory
