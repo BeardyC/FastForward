@@ -25,8 +25,7 @@ jobs:
       - checkout
       - run: aws cloudformation deploy --stack-name test-${CIRCLE_WORKFLOW_ID} --template-file template.yml  --capabilities "CAPABILITY_IAM" "CAPABILITY_NAMED_IAM"
   populate_inventory:
-    executor: aws_executor
-    working_directory: ~/
+    <<: *defaults
     steps:
       - run: |
           echo [all] >> inventory.txt
@@ -61,25 +60,17 @@ jobs:
     <<: *defaults
     steps:
       - run: apk add --update curl
-      - run:
-          name: smoke test.
-          command: |
-            URL="https://google333.com/"
-            if curl -s --head ${URL} 
-            then
-              return 0
-            else
-              return 1
-            fi
-      # The below does not seem to work. Can't miss commands + where?
-      # The Solution given does not work
-      # - destroy_environment
-      #   when: on_fail
-      - run:
-          name: Destroy Infra
-          command: |
-            aws cloudformation delete-stack --stack-name test-${CIRCLE_WORKFLOW_ID}
-          when: on_fail       
+      # - run:
+      #     name: smoke test.
+      #     command: |
+      #       URL="https://google333.com/"
+      #       if curl -s --head ${URL} 
+      #       then
+      #         return 0
+      #       else
+      #         return 1
+      #       fi
+      - destroy_environment
 workflows:
   infra:
     jobs:
