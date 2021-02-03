@@ -60,17 +60,25 @@ jobs:
     <<: *defaults
     steps:
       - run: apk add --update curl
-      # - run:
-      #     name: smoke test.
-      #     command: |
-      #       URL="https://google333.com/"
-      #       if curl -s --head ${URL} 
-      #       then
-      #         return 0
-      #       else
-      #         return 1
-      #       fi
-      - destroy_environment
+      - run:
+          name: smoke test.
+          command: |
+            URL="https://google333.com/"
+            if curl -s --head ${URL} 
+            then
+              return 0
+            else
+              return 1
+            fi
+      # The below does not seem to work. Can't miss commands + where?
+      # The Solution given does not work
+      # - destroy_environment
+      #   when: on_fail
+      - run:
+          name: Destroy Infra
+          command: |
+            aws cloudformation delete-stack --stack-name test-${CIRCLE_WORKFLOW_ID}
+          when: on_fail       
 workflows:
   infra:
     jobs:
